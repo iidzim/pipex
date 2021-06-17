@@ -6,17 +6,18 @@
 #    By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/14 10:51:45 by iidzim            #+#    #+#              #
-#    Updated: 2021/06/14 10:56:31 by iidzim           ###   ########.fr        #
+#    Updated: 2021/06/17 19:59:47 by iidzim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	pipex
 
-SRCS			=	./pipex.c
+SRCS			=	./src/pipex.c\
+					./src/ft_split.c\
+					./src/utils.c
 
 OBJS			= 	${SRCS:.c=.o}
 
-INCLUDE 		= 	-I includes -L includes
 CC				= 	gcc
 FLAGS           =  -Wall -Wextra -Werror -g -fsanitize=address
 RM				= 	rm -f
@@ -24,11 +25,13 @@ RM				= 	rm -f
 all:			$(NAME)
 
 $(NAME):		$(OBJS)
-				@$(CC) -o $(NAME) $(SRCS) $(INCLUDE) $(FLAGS)
+				@$(CC) -o $(NAME) $(SRCS) $(FLAGS)
 
-clean:			@$(RM) $(OBJS)
+clean:
+				@$(RM) $(OBJS)
 
-fclean:			@$(RM) $(NAME)
+fclean:			clean
+				@$(RM) $(NAME)
 
 re:				fclean all
 

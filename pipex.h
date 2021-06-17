@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 10:09:34 by iidzim            #+#    #+#             */
-/*   Updated: 2021/06/14 18:44:28 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/06/17 20:05:23 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,29 @@
 # include <signal.h>
 
 
+typedef struct  s_cmd
+{
+    char    *file1;
+    int     fd1;
+    char    *file2;
+    int     fd2;
+    char    *cmd1;
+    char    *path_cmd1;
+    char    *cmd2;
+    char    *path_cmd2;
+    char    *path;
+}               t_cmd;
+
 /*
-** 
+** utils
 */
+char	*ft_strdup(const char *str);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	*ft_strjoin(char const *s1, const char *s2);
+char	*ft_joinchar(char *s, char c);
+int     ft_strcmp(const char *s1, const char *s2);
+char	**ft_split(char const *s, char c);
+size_t  ft_strlen(const char *s);
+
 
 #endif
