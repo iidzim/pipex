@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 16:09:35 by iidzim            #+#    #+#             */
-/*   Updated: 2021/06/17 20:00:11 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/06/18 21:18:52 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,22 +120,23 @@ size_t	ft_strlen(const char *s)
 	return (i); 
 }
 
-// char	*ft_strcat(char *dst, char *src, size_t size)
-// {
-	// size_t	i;
-	// size_t	size_dst;
-	// size_t	size_src;
+char	*ft_strrchr(const char *s, int c)
+{
+	size_t		len;
+	char		*str;
+	char		val;
 
-	// size_dst = ft_strlen(dst);
-	// size_src = ft_strlen((char *)src);
-	// if (size <= size_dst)
-	// 	return (size + size_src);
-	// i = 0;
-	// while (src[i] != '\0' && (size - 1) > size_dst + i)
-	// {
-	// 	dst[size_dst + i] = src[i];
-	// 	i++;
-	// }
-	// dst[size_dst + i] = '\0';
-	// return (size_dst + size_src);
-// }
+	val = (char)c;
+	str = (char *)s;
+	len = ft_strlen(str);
+	if (c == 0)
+		return ((char *)(str + len));
+	while (len > 0)
+	{
+		if (str[len - 1] == c)
+			return (str + len - 1);
+		else
+			len--;
+	}
+	return (NULL);
+}

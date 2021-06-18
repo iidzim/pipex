@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 10:08:54 by iidzim            #+#    #+#             */
-/*   Updated: 2021/06/17 21:31:06 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/06/18 21:38:22 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,9 @@ void	print_err(int error_num, char *s)
 		printf("pipex: %s: No such file or directory\n", s);
 		exit(1);
 	}
-	else if (error_num == 2)
-		printf("error while opening the file\n");
 	else if (error_num == 3)
 	{
-		printf("pipex: syntax error\n");
+		printf("pipex: syntax error\nTry -> ./pipex file1 cmd1 cmd2 file2\n");
 		exit(1);
 	}
 }
@@ -62,10 +60,8 @@ char	*find_path(char *path, char *cmd_name)
 	p = ft_split(path, ':');
 	while (p[i])
 	{
-		test = ft_strdup("");
-		test = ft_strjoin(test, p[i]);
-		test = ft_strjoin(test, "/");
-		test = ft_strjoin(test, cmd_name);
+		test = ft_strdup(p[i]);
+		test = ft_strjoin(ft_strjoin(test, "/"), cmd_name);
 		if (!access(test, R_OK))
 			return (test);
 		i++;
@@ -135,7 +131,7 @@ int	main(int argc, char **argv, char **env)
 		parse(&cmd, env);
 		printf("file1 -> [%s]\ncmd1 -> [%s]\n", cmd.file1, cmd.cmd1);
 		printf("file2 -> [%s]\ncmd2 -> [%s]\n", cmd.file2, cmd.cmd2);
-		// execute(cmd);
+		execute(&cmd);
 	}
 	else
 		print_err(3, NULL);
