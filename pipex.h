@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 10:09:34 by iidzim            #+#    #+#             */
-/*   Updated: 2021/06/18 21:50:33 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/06/19 20:13:10 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,19 @@ typedef struct  s_cmd
 	char    *cmd2;
 	char    *path_cmd2;
 	char    *path;//!
+	int		ret_val;
 }               t_cmd;
 
-typedef struct s_cmd
-{
-	int		fd1;
-	int		fd2;
-	char	*cmd1;
-	char	*path_cmd1;
-	char	*cmd2;
-	char	*path_cmd2;
-}
+// typedef struct s_cmd
+// {
+// 	int		fd1;
+// 	int		fd2;
+// 	char	*cmd1;
+// 	char	*path_cmd1;
+// 	char	*cmd2;
+// 	char	*path_cmd2;
+// 	int		ret_val;
+// }
 
 /*
 ** utils
@@ -59,7 +61,7 @@ char	*ft_joinchar(char *s, char c);
 int     ft_strcmp(const char *s1, const char *s2);
 char	**ft_split(char const *s, char c);
 size_t  ft_strlen(const char *s);
-
+char	*ft_strrchr(const char *s, int c);
 
 int execute(t_cmd *cmd);
 
