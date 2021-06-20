@@ -6,7 +6,7 @@
 #    By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/14 10:51:45 by iidzim            #+#    #+#              #
-#    Updated: 2021/06/19 12:14:00 by iidzim           ###   ########.fr        #
+#    Updated: 2021/06/20 20:56:15 by iidzim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ SRCS			=	./src/ipex.c\
 OBJS			= 	${SRCS:.c=.o}
 
 CC				= 	gcc
-FLAGS           =  -Wall -Wextra -Werror -g -fsanitize=address
+FLAGS           =  -Wall -Wextra -Werror -g 
 RM				= 	rm -f
 
 all:			$(NAME)

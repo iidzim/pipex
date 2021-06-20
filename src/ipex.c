@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 18:36:32 by iidzim            #+#    #+#             */
-/*   Updated: 2021/06/20 20:40:05 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/06/20 21:46:22 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,7 @@ char	*is_valid_cmd(char **cmd, char **env)
 		path = ft_strdup(path_var[i]);
 		path = ft_strjoin(ft_strjoin(path, "/"), cmd_name);
 		if (!access(path, R_OK))
-		{
-			printf("f:is_valid_cmd\tpath => [%s]\n", path);
 			return (path);
-		}
 		free(path);
 	}
 	print_err(NULL, cmd_name, 2);
@@ -95,8 +92,6 @@ void exec_cmd1(t_cmd *c, char **env, int pipe[2])
 	dup2(c->fd1, 0);
 	close(pipe[1]);
 	execve(c->path_cmd1, c->cmd1, env);
-	// if (execve(c->path_cmd1, c->cmd1, env))
-		// free(c);
 	close(c->fd1);
 }
 
@@ -114,21 +109,14 @@ void exec_cmd2(t_cmd *c, char **env, int pipe[2])
 	dup2(c->fd2, 1);
 	close(pipe[0]);
 	execve(c->path_cmd2, c->cmd2, env);
-	// if (execve(c->path_cmd2, c->cmd2, env))
-		//free (c);
 	close(c->fd2);
 }
-
-// void	free_struct(t_cmd *c)
-// {
-// 	if (c->)
-	
-// }
 
 int main(int argc, char **argv, char **env)
 {
 	int		fd_pipe[2];
 	pid_t	pid1, pid2;
+	int status_ptr;
 
 	if (argc != 5)
 		return (print_err("pipex: syntax error\n", NULL, 0));
@@ -150,9 +138,13 @@ int main(int argc, char **argv, char **env)
 		return (print_err("Fork : fail\n", NULL, 0));
 	else if (pid2 == 0)
 		exec_cmd2(&c, env, fd_pipe);
-	// parent -> check child exit status
-	// close(fd[0]);
-	// close(fd[1]);
+	waitpid(pid1,&status_ptr,0);
+	waitpid(pid2,&status_ptr,0);
+	if WEXITSTATUS(status_ptr)
+		exit(WEXITSTATUS(status_ptr));
+	// if (WIFEXITED(status_ptr))
+	// 	exit(WIFEXITED(status_ptr));
 	// printf("file1 = [%s]\nfile2 = [%s]\ncmd1 = [%s]\ncmd2 = [%s]\n", c.f1, c.f2, c.cmd1, c.cmd2);
+	// system("leaks pipex");
 	return (0);
 }
