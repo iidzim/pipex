@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 10:09:34 by iidzim            #+#    #+#             */
-/*   Updated: 2021/06/19 20:13:10 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/06/20 20:13:06 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ typedef struct  s_cmd
 	char    *file2;//!
 	char    *f2;
 	int     fd2;//!
-	char    *cmd1;
+	char    **cmd1;
 	char    *path_cmd1;
-	char    *cmd2;
+	char    **cmd2;
 	char    *path_cmd2;
 	char    *path;//!
 	int		ret_val;
@@ -44,9 +44,9 @@ typedef struct  s_cmd
 // {
 // 	int		fd1;
 // 	int		fd2;
-// 	char	*cmd1;
+// 	char	**cmd1;
 // 	char	*path_cmd1;
-// 	char	*cmd2;
+// 	char	**cmd2;
 // 	char	*path_cmd2;
 // 	int		ret_val;
 // }
