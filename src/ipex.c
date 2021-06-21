@@ -6,22 +6,15 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 18:36:32 by iidzim            #+#    #+#             */
-/*   Updated: 2021/06/20 21:46:22 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/06/21 11:59:55 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
 
-int print_err(char *msg, char *cmd, int i)
+void print_err(char *msg, char *cmd)
 {
-	if (cmd && i == 1)
-	{
-		write(2, "pipex: ", 7);
-		write(2, cmd, ft_strlen(cmd));
-		write(2, ": No such file or directory\n", 27);
-		exit(1);
-	}
-	else if (cmd && i == 2)
+	if (cmd)
 	{
 		write(2, "pipex: ", 7);
 		write(2, cmd, ft_strlen(cmd));
@@ -32,7 +25,6 @@ int print_err(char *msg, char *cmd, int i)
 		write(2, msg, ft_strlen(msg));
 		exit(1);
 	}
-	return (0);
 }
 
 char	**get_path(char **env)
@@ -74,7 +66,7 @@ char	*is_valid_cmd(char **cmd, char **env)
 			return (path);
 		free(path);
 	}
-	print_err(NULL, cmd_name, 2);
+	print_err(NULL, cmd_name);
 	return (NULL);
 }
 
@@ -82,11 +74,13 @@ void exec_cmd1(t_cmd *c, char **env, int pipe[2])
 {
 	c->fd1 = open(c->f1, O_RDONLY);
 	if (c->fd1 < -1)
-		print_err("error while opening the file 1\n", NULL, 0);
+	{
+		perror("file1: ");
+		exit(1);
+	}
 	c->path_cmd1 = is_valid_cmd(c->cmd1, env);
 	if (c->path_cmd1 == NULL)
 		exit (1);
-	// printf("f:exec_cmd1\tpath_cmd1[%s]\n", c->path_cmd1);
 	close(pipe[0]);
 	dup2(pipe[1], 1);
 	dup2(c->fd1, 0);
@@ -99,11 +93,13 @@ void exec_cmd2(t_cmd *c, char **env, int pipe[2])
 {
 	c->fd2 = open(c->f2, O_CREAT | O_WRONLY);
 	if (c->fd2 < -1)
-		print_err("error while opening the file 2\n", NULL, 0);
+	{		
+		perror("file2: ");
+		exit(1);
+	}
 	c->path_cmd2 = is_valid_cmd(c->cmd2, env);
 	if (c->path_cmd2 == NULL)
 		exit(127);
-	// printf("f:exec_cmd2\tpath_cmd2[%s]\n", c->path_cmd2);
 	close(pipe[1]);
 	dup2(pipe[0], 0);
 	dup2(c->fd2, 1);
@@ -112,6 +108,11 @@ void exec_cmd2(t_cmd *c, char **env, int pipe[2])
 	close(c->fd2);
 }
 
+// ./pipex Makefile cat ls file2
+// ./pipex pipex.h ls "cat -e"  file2
+//  ./pipex makefile cat "grep void" file2
+// < makefile sleep 500 | echo hey > bash
+
 int main(int argc, char **argv, char **env)
 {
 	int		fd_pipe[2];
@@ -119,32 +120,34 @@ int main(int argc, char **argv, char **env)
 	int status_ptr;
 
 	if (argc != 5)
-		return (print_err("pipex: syntax error\n", NULL, 0));
+		print_err("pipex: syntax error\n", NULL);
 	t_cmd c = {.f1 = argv[1], .f2 = argv[4], .cmd1 = ft_split(argv[2], 32),
 		.cmd2 = ft_split(argv[3], 32), .ret_val = 0};
-	// printf("argv[1] = [%s]\nargv[2] = [%s]\nargv[3] = [%s]\nargv[4] = [%s]\n",
-	// 	c.f1, c.cmd1, c.cmd2, c.f2);
-	if (access(c.f1, R_OK))
-		return (print_err(NULL, c.f1, 1));
+	if (access(c.f1, F_OK) || access(c.f1, R_OK))
+	{
+		perror("pipex: ");
+		exit(1);
+	}
 	if (pipe(fd_pipe) == -1)
-		return (print_err("Pipe : fail\n", NULL, 0));
+		print_err("Pipe : fail\n", NULL);
 	pid1 = fork();
 	if (pid1 < 0)
-		return (print_err("Fork : fail\n", NULL, 0));
+		print_err("Fork : fail\n", NULL);
 	else if (pid1 == 0)
 		exec_cmd1(&c, env, fd_pipe);
 	pid2 = fork();
 	if (pid2 < 0)
-		return (print_err("Fork : fail\n", NULL, 0));
+		print_err("Fork : fail\n", NULL);
 	else if (pid2 == 0)
 		exec_cmd2(&c, env, fd_pipe);
-	waitpid(pid1,&status_ptr,0);
+	// waitpid(pid1,&status_ptr,0);
 	waitpid(pid2,&status_ptr,0);
-	if WEXITSTATUS(status_ptr)
+	if (WIFEXITED(status_ptr))
 		exit(WEXITSTATUS(status_ptr));
 	// if (WIFEXITED(status_ptr))
-	// 	exit(WIFEXITED(status_ptr));
-	// printf("file1 = [%s]\nfile2 = [%s]\ncmd1 = [%s]\ncmd2 = [%s]\n", c.f1, c.f2, c.cmd1, c.cmd2);
+		// exit(WIFEXITED(status_ptr));
 	// system("leaks pipex");
 	return (0);
 }
+
+// page 538
