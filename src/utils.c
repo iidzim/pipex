@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 16:09:35 by iidzim            #+#    #+#             */
-/*   Updated: 2021/06/18 21:18:52 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/06/21 20:23:45 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,41 +83,14 @@ char	*ft_strjoin(char const *s1, const char *s2)
 	return (NULL);
 }
 
-char	*ft_joinchar(char *s, char c)
-{
-	int		i;
-	char	*str;
-
-	i = strlen(s);
-	if (!(str = (char *)malloc(i + 2)))
-		return (0);
-	i = -1;
-	while (s[++i])
-		str[i] = s[i];
-	str[i] = c;
-	str[i + 1] = '\0';
-	// free(s);
-	return (str);
-}
-
-int	ft_strcmp(const char *s1, const char *s2)
-{
-	while ((*s1 && *s2) && (*s1 == *s2))
-	{
-		s1++;
-		s2++;
-	}
-	return (*(unsigned char *)s1 - *(unsigned char *)s2);
-}
-
 size_t	ft_strlen(const char *s)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s[i] != '\0')
 		i++;
-	return (i); 
+	return (i);
 }
 
 char	*ft_strrchr(const char *s, int c)

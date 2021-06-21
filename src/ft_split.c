@@ -6,16 +6,16 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 16:07:05 by iidzim            #+#    #+#             */
-/*   Updated: 2021/06/17 20:00:22 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/06/21 20:13:55 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
 
-static int			count_word(char const *s, char c)
+static int	count_word(char const *s, char c)
 {
-	int		i;
-	int		w;
+	int	i;
+	int	w;
 
 	i = 0;
 	w = 0;
@@ -34,7 +34,7 @@ static int			count_word(char const *s, char c)
 	return (w);
 }
 
-static size_t		size_word(char const *s, char c)
+static size_t	size_word(char const *s, char c)
 {
 	int	i;
 
@@ -44,7 +44,7 @@ static size_t		size_word(char const *s, char c)
 	return (i);
 }
 
-static void			clean(char **p, int c)
+static void	clean(char **p, int c)
 {
 	while (c >= 0)
 	{
@@ -54,14 +54,14 @@ static void			clean(char **p, int c)
 	free(p);
 }
 
-static char			*ft_next_word(const char *s, char c)
+static char	*ft_next_word(const char *s, char c)
 {
 	while (*s && *s == c)
 		s++;
 	return ((char *)s);
 }
 
-char				**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
 	size_t		i;
 	size_t		nbw;
@@ -71,7 +71,7 @@ char				**ft_split(char const *s, char c)
 	if (!s)
 		return (NULL);
 	nbw = count_word((char *)s, c);
-	p = (char **)malloc((nbw + 1) * sizeof(char*));
+	p = (char **)malloc((nbw + 1) * sizeof(char *));
 	if (p == NULL)
 		return (NULL);
 	while (i < nbw)

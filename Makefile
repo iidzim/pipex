@@ -6,18 +6,14 @@
 #    By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/14 10:51:45 by iidzim            #+#    #+#              #
-#    Updated: 2021/06/20 20:56:15 by iidzim           ###   ########.fr        #
+#    Updated: 2021/06/21 20:17:56 by iidzim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	pipex
 
-# SRCS			=	./src/pipex.c\
-# 					./src/exec.c\
-# 					./src/ft_split.c\
-# 					./src/utils.c
-
-SRCS			=	./src/ipex.c\
+SRCS			=	./src/pipex.c\
+					./src/main.c\
 					./src/ft_split.c\
 					./src/utils.c
 
