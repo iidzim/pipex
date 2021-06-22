@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 10:09:34 by iidzim            #+#    #+#             */
-/*   Updated: 2021/06/22 09:46:43 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/06/22 14:57:29 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,23 +22,6 @@
 # include <sys/types.h>
 # include <fcntl.h>
 # include <signal.h>
-
-
-// typedef struct  s_cmd
-// {
-// 	char    *file1; //!
-// 	char    *f1;
-// 	int     fd1;//!
-// 	char    *file2;//!
-// 	char    *f2;
-// 	int     fd2;//!
-// 	char    **cmd1;
-// 	char    *path_cmd1;
-// 	char    **cmd2;
-// 	char    *path_cmd2;
-// 	char    *path;//!
-// 	int		ret_val;
-// }               t_cmd;
 
 typedef struct s_cmd
 {

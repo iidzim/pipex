@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 20:07:15 by iidzim            #+#    #+#             */
-/*   Updated: 2021/06/22 09:52:48 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/06/22 14:57:59 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	exec_cmd1(t_cmd *c, char **env, int pipe[2])
 		perror("file1: ");
 		exit(1);
 	}
-	printf("f:cmd1\tno exit statsus\n");
 	c->path_cmd1 = is_valid_cmd(c->cmd1, env);
 	if (c->path_cmd1 == NULL)
 		exit (1);
@@ -34,7 +33,7 @@ void	exec_cmd1(t_cmd *c, char **env, int pipe[2])
 
 void	exec_cmd2(t_cmd *c, char **env, int pipe[2])
 {
-	c->fd2 = open(c->f2, O_CREAT | O_RDWR, S_IRWXU);
+	c->fd2 = open(c->f2, O_CREAT | O_RDWR | O_TRUNC, S_IRWXU);
 	if (c->fd2 < -1 || access(c->f2, W_OK))
 	{
 		perror("file2: ");
@@ -85,12 +84,10 @@ int	main(int argc, char **argv, char **env)
 		.cmd2 = ft_split(argv[3], 32)};
 	exec_cmd(&c, env);
 	printf(">> %d\n", WEXITSTATUS(c.status_ptr));
-	system("leaks pipex");
 	if (WIFEXITED(c.status_ptr))
 		exit(WEXITSTATUS(c.status_ptr));
 	return (0);
 }
 
-//! ./pipex infile ls "cat -e"  file2
 //? WIFEXITED → Query status to see if a child process ended normally.
 //? WEXITSTATUS → Return exit status.
