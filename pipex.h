@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 10:09:34 by iidzim            #+#    #+#             */
-/*   Updated: 2021/06/21 20:22:54 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/06/22 09:46:43 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_cmd
 	char	*path_cmd1;
 	char	**cmd2;
 	char	*path_cmd2;
-	// int		ret_val;
+	int		status_ptr;
 }				t_cmd;
 
 /*

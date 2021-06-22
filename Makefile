@@ -6,7 +6,7 @@
 #    By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/14 10:51:45 by iidzim            #+#    #+#              #
-#    Updated: 2021/06/21 20:17:56 by iidzim           ###   ########.fr        #
+#    Updated: 2021/06/22 09:53:53 by iidzim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ SRCS			=	./src/pipex.c\
 OBJS			= 	${SRCS:.c=.o}
 
 CC				= 	gcc
-FLAGS           =  -Wall -Wextra -Werror -g 
+FLAGS           =  -Wall -Wextra -Werror
 RM				= 	rm -f
 
 all:			$(NAME)

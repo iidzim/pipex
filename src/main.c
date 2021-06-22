@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 20:07:15 by iidzim            #+#    #+#             */
-/*   Updated: 2021/06/21 20:24:03 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/06/22 09:52:48 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,12 @@
 void	exec_cmd1(t_cmd *c, char **env, int pipe[2])
 {
 	c->fd1 = open(c->f1, O_RDONLY);
-	if (c->fd1 < -1)
+	if (c->fd1 < 0)
 	{
 		perror("file1: ");
 		exit(1);
 	}
+	printf("f:cmd1\tno exit statsus\n");
 	c->path_cmd1 = is_valid_cmd(c->cmd1, env);
 	if (c->path_cmd1 == NULL)
 		exit (1);
@@ -50,43 +51,43 @@ void	exec_cmd2(t_cmd *c, char **env, int pipe[2])
 	close(c->fd2);
 }
 
-int	main(int argc, char **argv, char **env)
+void	exec_cmd(t_cmd *c, char **env)
 {
 	int		fd_pipe[2];
-	int		status_ptr;
 	pid_t	pid1;
 	pid_t	pid2;
-	t_cmd	c;
 
-	if (argc != 5)
-		print_err("pipex: syntax error\n", NULL);
-	c = (t_cmd){.f1 = argv[1], .f2 = argv[4], .cmd1 = ft_split(argv[2], 32),
-		.cmd2 = ft_split(argv[3], 32)};
-	if (access(c.f1, F_OK) || access(c.f1, R_OK))
-	{
-		perror("pipex: ");
-		exit(1);
-	}
 	if (pipe(fd_pipe) == -1)
 		print_err("Pipe : fail\n", NULL);
 	pid1 = fork();
 	if (pid1 < 0)
 		print_err("Fork : fail\n", NULL);
 	else if (pid1 == 0)
-		exec_cmd1(&c, env, fd_pipe);
+		exec_cmd1(c, env, fd_pipe);
 	pid2 = fork();
 	if (pid2 < 0)
 		print_err("Fork : fail\n", NULL);
 	else if (pid2 == 0)
-		exec_cmd2(&c, env, fd_pipe);
+		exec_cmd2(c, env, fd_pipe);
 	close(fd_pipe[0]);
 	close(fd_pipe[1]);
-	waitpid(pid1, &status_ptr, 0);
-	waitpid(pid2, &status_ptr, 0);
-	//? printf(">> %d\n", WEXITSTATUS(status_ptr));
-	//? system("leaks pipex");
-	if (WIFEXITED(status_ptr))
-		exit(WEXITSTATUS(status_ptr));
+	waitpid(pid1, &(c->status_ptr), 0);
+	waitpid(pid2, &(c->status_ptr), 0);
+}
+
+int	main(int argc, char **argv, char **env)
+{
+	t_cmd	c;
+
+	if (argc != 5)
+		print_err("pipex: syntax error\n", NULL);
+	c = (t_cmd){.f1 = argv[1], .f2 = argv[4], .cmd1 = ft_split(argv[2], 32),
+		.cmd2 = ft_split(argv[3], 32)};
+	exec_cmd(&c, env);
+	printf(">> %d\n", WEXITSTATUS(c.status_ptr));
+	system("leaks pipex");
+	if (WIFEXITED(c.status_ptr))
+		exit(WEXITSTATUS(c.status_ptr));
 	return (0);
 }
 
