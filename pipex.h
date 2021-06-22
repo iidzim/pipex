@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 10:09:34 by iidzim            #+#    #+#             */
-/*   Updated: 2021/06/22 14:57:29 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/06/22 16:00:24 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,21 +42,20 @@ typedef struct s_cmd
 char	*ft_strdup(const char *str);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, const char *s2);
-size_t  ft_strlen(const char *s);
+size_t	ft_strlen(const char *s);
 char	*ft_strrchr(const char *s, int c);
 
 /*
 ** pipex.c
 */
 void	print_err(char *msg, char *cmd);
-char	*ft_joinchar(char *s, char c);
-int     ft_strcmp(const char *s1, const char *s2);
 char	*is_valid_cmd(char **cmd, char **env);
+char	*ft_joinchar(char *s, char c);
+int		ft_strcmp(const char *s1, const char *s2);
 
 /*
 ** ft_split.c
 */
 char	**ft_split(char const *s, char c);
-
 
 #endif

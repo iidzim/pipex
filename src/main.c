@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 20:07:15 by iidzim            #+#    #+#             */
-/*   Updated: 2021/06/22 14:57:59 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/06/22 16:02:25 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,10 @@ int	main(int argc, char **argv, char **env)
 	t_cmd	c;
 
 	if (argc != 5)
-		print_err("pipex: syntax error\n", NULL);
+		print_err("pipex: syntax error\nTry: file1 cmd1 cmd2 file2\n", NULL);
 	c = (t_cmd){.f1 = argv[1], .f2 = argv[4], .cmd1 = ft_split(argv[2], 32),
 		.cmd2 = ft_split(argv[3], 32)};
 	exec_cmd(&c, env);
-	printf(">> %d\n", WEXITSTATUS(c.status_ptr));
 	if (WIFEXITED(c.status_ptr))
 		exit(WEXITSTATUS(c.status_ptr));
 	return (0);
